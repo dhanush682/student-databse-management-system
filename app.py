@@ -307,7 +307,19 @@ def delete(sid):
     conn.commit()
     conn.close()
     return redirect(url_for("index", message="Student deleted successfully!"))
+def init_db():
+    conn = sqlite3.connect("students.db")  # use the same DB path your app uses
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS students (
+            student_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL
+            -- add the other columns your app uses
+        )
+    """)
+    conn.commit()
+    conn.close()
 
+init_db()
 # 9. START APPLICATION
 
 if __name__ == "__main__":
